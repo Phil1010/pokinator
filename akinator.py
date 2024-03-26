@@ -24,6 +24,10 @@ class Pokinator:
 
         self.current_node = 0
 
+    def update_tree(self):
+        self.classifier = self.classifier.fit(self.samples, self.features)
+        self.tree = self.classifier.tree_
+
     def get_feature(self):
         feature_index = self.tree.feature[self.current_node]
         return self.features_labels[feature_index]
@@ -112,13 +116,26 @@ features = [
 # pa.jouer()
 
 p = Pokinator(samples, samples_labels, features, features_labels)
-p.add_sample_label("nicolas")
-p.add_feature_label("bipède")
+# p.add_sample_label("nicolas")
+# p.add_feature_label("bipède")
 
-print(p.samples, p.samples_labels, p.features, p.features_labels)
-# while not p.is_terminal():
-#     print(p.get_feature())
-#     yesno = input("yes / no\n")
-#     p.answer(yesno)
+# print(p.samples, p.samples_labels, p.features, p.features_labels)
 
-# print(p.guess())
+while True:
+    p.show_tree()
+    while not p.is_terminal():
+        print(p.get_feature())
+        yesno = input("yes / no\n")
+        p.answer(yesno)
+
+    print(p.guess())
+
+    yesno = input("yes / no\n")
+    if yesno == "no":
+        sample = input("nom pokemon")
+        p.add_sample_label(sample)
+
+        feature = input("caractéristique pokémon")
+        p.add_feature_label(feature)
+
+    p.update_tree()
