@@ -93,8 +93,6 @@ class Pokinator:
             self.features_labels.append(feature_label)
             self.samples[len(self.features) - 1][len(self.features_labels) - 1] = 1
 
-          
-
 samples_labels = ["bulbizarre", "salameche", "carapuce"]
 
 features_labels = ["vert", "rouge", "bleu", "test"]
@@ -121,21 +119,33 @@ p = Pokinator(samples, samples_labels, features, features_labels)
 
 # print(p.samples, p.samples_labels, p.features, p.features_labels)
 
-while True:
-    p.show_tree()
-    while not p.is_terminal():
-        print(p.get_feature())
-        yesno = input("yes / no\n")
-        p.answer(yesno)
+# while True:
+#     p.show_tree()
+#     while not p.is_terminal():
+#         print(p.get_feature())
+#         yesno = input("yes / no\n")
+#         p.answer(yesno)
 
-    print(p.guess())
+#     print(p.guess())
 
-    yesno = input("yes / no\n")
-    if yesno == "no":
-        sample = input("nom pokemon")
-        p.add_sample_label(sample)
+#     yesno = input("yes / no\n")
+#     if yesno == "no":
+#         sample = input("nom pokemon")
+#         p.add_sample_label(sample)
 
-        feature = input("caractéristique pokémon")
-        p.add_feature_label(feature)
+#         feature = input("caractéristique pokémon")
+#         p.add_feature_label(feature)
 
-    p.update_tree()
+#     p.update_tree()
+
+def create_pokinator():
+    samples_labels = ["bulbizarre", "salameche", "carapuce"]
+    features_labels = ["vert", "rouge", "bleu", "test"]
+    samples = [
+        [1, 0, 0, 1],  # bulbizarre
+        [0, 1, 0, 1],  # salameche
+        [0, 0, 1, 0],  # carapuce
+    ]
+    features = [0, 1, 2]
+
+    return Pokinator(samples, samples_labels, features, features_labels)

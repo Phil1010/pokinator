@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - Pokinator{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="row">
+        <div class="col">
+            <h1 class="text-center">Bienvenue dans Pokinator !</h1>
+            <button class="btn btn-primary btn-lg btn-block"
+                onclick="window.location.href='/question'">Commencer</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
