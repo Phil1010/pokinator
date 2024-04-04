@@ -78,7 +78,7 @@ class Pokinator:
             class_names=self.samples_labels,
             filled=True,
         )
-        plt.savefig('./static/tree.png')
+        plt.savefig('./static/tree.svg')
 
     def is_terminal(self):
         return self.get_yes_node() == -1 or self.get_no_node() == -1
