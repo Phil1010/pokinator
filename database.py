@@ -3,7 +3,7 @@ import numpy as np
 
 class Database:
     def __init__(self):
-        self.conn = sqlite3.connect("database.db")
+        self.conn = sqlite3.connect("database.db", check_same_thread=False)
         self.cursor = self.conn.cursor()
 
         self.init_tables()
@@ -57,9 +57,11 @@ class Database:
             except: # si on la trouve pas on l'ajoute
                 feature_id = self.insert_feature(feature)
 
-            print(pokemon_id, feature_id)           
-            self.cursor.execute("INSERT INTO sample (pokemon_id, feature_id) values (?, ?)", [pokemon_id, feature_id])
-            self.conn.commit()
+            try:   
+                self.cursor.execute("INSERT INTO sample (pokemon_id, feature_id) values (?, ?)", [pokemon_id, feature_id])
+                self.conn.commit()
+            except:
+                pass
 
     def get_all_pokemons(self):
         return self.cursor.execute("select id, label from pokemon").fetchall()
@@ -91,9 +93,10 @@ class Database:
                 f[pokemon_label]
             except:
                 f[pokemon_label] = len(f)
+                samples_labels.append(pokemon_label)
+
            
             feature.append(f[pokemon_label])
-            samples_labels.append(pokemon_label)
 
             feature_list = np.array(feature_list.split(","), dtype=int)
             samples.append(feature_list)

@@ -37,7 +37,7 @@ class Pokinator:
     def update_tree(self):
         self.load_db()
 
-        print(self.samples, self.features)
+        print(self.samples, self.samples_labels, self.features, self.features_labels)
 
         self.classifier = self.classifier.fit(self.samples, self.features)
         self.tree = self.classifier.tree_
@@ -68,6 +68,17 @@ class Pokinator:
             filled=True,
         )
         plt.show()
+
+    
+    def treetree(self):
+        plt.figure()
+        tree.plot_tree(
+            self.classifier, 
+            feature_names=self.features_labels, 
+            class_names=self.samples_labels,
+            filled=True,
+        )
+        plt.savefig('./static/tree.png')
 
     def is_terminal(self):
         return self.get_yes_node() == -1 or self.get_no_node() == -1
@@ -111,28 +122,28 @@ p = Pokinator()
 
 # # print(p.samples, p.samples_labels, p.features, p.features_labels)
 
-while True:
-    p.load_db()
-    p.update_tree()
-    p.show_tree()
-    while not p.is_terminal():
-        print(p.get_feature())
-        yesno = input("yes / no\n")
-        p.answer(yesno)
+# while True:
+#     p.load_db()
+#     p.update_tree()
+#     p.show_tree()
+#     while not p.is_terminal():
+#         print(p.get_feature())
+#         yesno = input("yes / no\n")
+#         p.answer(yesno)
 
-    print(p.guess())
-    print(p.get_sample())
+#     print(p.guess())
+#     print(p.get_sample())
 
-    yesno = input("yes / no\n")
-    if yesno == "no":
-        feature_label_list = []
-        for i, sample in enumerate(p.get_sample()):
-            if (sample == 1):
-                feature_label_list.append(p.features_labels[i])
+#     yesno = input("yes / no\n")
+#     if yesno == "no":
+#         feature_label_list = []
+#         for i, sample in enumerate(p.get_sample()):
+#             if (sample == 1):
+#                 feature_label_list.append(p.features_labels[i])
 
-        sample_label = input("nom pokemon\n")
-        feature_label_list.append(input("caractéristique pokémon\n"))
-        p.insert_sample(sample_label, feature_label_list)
+#         sample_label = input("nom pokemon\n")
+#         feature_label_list.append(input("caractéristique pokémon\n"))
+#         p.insert_sample(sample_label, feature_label_list)
 
     
-    p.update_tree()
+#     p.update_tree()
